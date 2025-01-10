@@ -7,9 +7,6 @@ import json
 from typing import List
 
 class Subject:
-    """
-    Класс для управления наблюдателями.
-    """
     def __init__(self):
         self._observers: List[Observer] = []
 
@@ -25,17 +22,11 @@ class Subject:
 
 
 class Observer:
-    """
-    Базовый интерфейс наблюдателя.
-    """
     def update(self, data):
         raise NotImplementedError("Must override update method")
 
 
 class CurrencySubject(Subject):
-    """
-    Класс, который запрашивает данные о курсах валют и уведомляет наблюдателей.
-    """
     def __init__(self, update_interval=10):
         super().__init__()
         self.update_interval = update_interval
@@ -60,9 +51,6 @@ class CurrencySubject(Subject):
 
 
 class WebSocketObserver(tornado.websocket.WebSocketHandler, Observer):
-    """
-    Класс для связи с клиентами через WebSocket.
-    """
     def open(self):
         self.application.subject.attach(self)
         print(f"WebSocket opened: {self}")

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы валют</title>
+    <script>
+        async function getCurrencyData() {
+            const currency = document.getElementById("currencySelect").value;
+            const response = await fetch(`/currency?currency=${currency}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                document.getElementById("result").innerHTML = `
+                    <p>Текущий курс: ${data.current.toFixed(2)}</p>
+                    <p>Предыдущий курс: ${data.previous.toFixed(2)}</p>
+                `;
+            } else {
+                document.getElementById("result").innerHTML = `<p>Ошибка: ${data.error}</p>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Курсы валют Центробанка РФ</h1>
+    <label for="currencySelect">Выберите валюту:</label>
+    <select id="currencySelect">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="CNY">CNY</option>
+        <!-- Добавить другие коды валют -->
+    </select>
+    <button onclick="getCurrencyData()">Получить курс</button>
+    <div id="result"></div>
+</body>
+</html>
